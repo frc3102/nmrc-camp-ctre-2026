@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.3745000000000003,
+        "y": 1.42197619047619
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.4243095238095247,
+        "y": 1.4759642857142854
+      },
+      "isLocked": false,
+      "linkedName": "Outpost Side After Shoot"
+    },
+    {
+      "anchor": {
+        "x": 1.067988095238096,
+        "y": 2.231797619047619
+      },
+      "prevControl": {
+        "x": 1.067988095238096,
+        "y": 1.4381730324037938
+      },
+      "nextControl": {
+        "x": 1.067988095238096,
+        "y": 2.7824761904761908
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.067988095238096,
+        "y": 2.847261904761905
+      },
+      "prevControl": {
+        "x": 1.0463928571428582,
+        "y": 2.21020238095238
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -179.30130561701654
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 49.57392125990087
+  },
+  "useDefaultConstraints": true
+}

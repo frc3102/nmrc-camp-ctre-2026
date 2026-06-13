@@ -22,9 +22,9 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.superstructure.Superstructure;
-import frc.robot.subsystems.superstructure.SuperstructureIO;
-import frc.robot.subsystems.superstructure.SuperstructureIOTalonFX;
+import frc.robot.subsystems.shooter.ShootIO;
+import frc.robot.subsystems.shooter.ShootIOTalonFX;
+import frc.robot.subsystems.shooter.ShootSubystem;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIO;
@@ -43,7 +43,7 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Vision vision;
-  private final Superstructure superstructure;
+  private final ShootSubystem superstructure;
 
   private final GameState gameState;
 
@@ -73,7 +73,7 @@ public class RobotContainer {
             new Vision(
                 drive::addVisionMeasurement,
                 new VisionIOLimelight(VisionConstants.camera0Name, drive::getRotation));
-        superstructure = new Superstructure(new SuperstructureIOTalonFX());
+        superstructure = new ShootSubystem(new ShootIOTalonFX());
 
         break;
 
@@ -91,7 +91,7 @@ public class RobotContainer {
                 drive::addVisionMeasurement,
                 new VisionIOPhotonVisionSim(
                     VisionConstants.camera0Name, VisionConstants.robotToCamera0, drive::getPose));
-        superstructure = new Superstructure(new SuperstructureIOTalonFX());
+        superstructure = new ShootSubystem(new ShootIOTalonFX());
         break;
 
       default:
@@ -104,7 +104,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         vision = new Vision(drive::addVisionMeasurement, new VisionIO() {});
-        superstructure = new Superstructure(new SuperstructureIO() {});
+        superstructure = new ShootSubystem(new ShootIO() {});
 
         break;
     }
@@ -143,6 +143,7 @@ public class RobotContainer {
 
   public void registerNamedCommands() {
     // TODO
+    // NamedCommands.registerCommand("Shoot", ...);
   }
 
   /**

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.field.FieldConstants;
 import frc.robot.game.GameState;
-import frc.robot.subsystems.superstructure.SuperstructureConstants;
+import frc.robot.subsystems.shooter.ShootConstants;
 import org.littletonrobotics.junction.Logger;
 
 public class ShootingCalculator {
@@ -103,8 +103,8 @@ public class ShootingCalculator {
     double headingRad = pose.getRotation().getRadians();
     double cosH = Math.cos(headingRad);
     double sinH = Math.sin(headingRad);
-    double shooterXOffset = SuperstructureConstants.SHOOTER_OFFSET_X.in(Meters);
-    double shooterYOffset = SuperstructureConstants.SHOOTER_OFFSET_Y.in(Meters);
+    double shooterXOffset = ShootConstants.SHOOTER_OFFSET_X.in(Meters);
+    double shooterYOffset = ShootConstants.SHOOTER_OFFSET_Y.in(Meters);
     double turretX = pose.getX() + shooterXOffset * cosH - shooterYOffset * sinH;
     double turretY = pose.getY() + shooterXOffset * sinH + shooterYOffset * cosH;
 

@@ -1,18 +1,21 @@
-package frc.robot.subsystems.superstructure;
+package frc.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.superstructure.SuperstructureIOInputsAutoLogged;
 import frc.robot.util.ShootingCalculator;
 import org.littletonrobotics.junction.Logger;
 
-public class Superstructure extends SubsystemBase {
-  private final SuperstructureIO io;
+public class ShootSubystem extends SubsystemBase {
+  private final ShootIO io;
   private final SuperstructureIOInputsAutoLogged inputs = new SuperstructureIOInputsAutoLogged();
 
-  public Superstructure(SuperstructureIO io) {
+  private double targetRPMs;
+
+  public ShootSubystem(ShootIO io) {
     this.io = io;
   }
 
@@ -23,12 +26,34 @@ public class Superstructure extends SubsystemBase {
   }
 
   public void startConveyorAndKicker() {
-    io.setKickerRPS(SuperstructureConstants.Kicker.DEFAULT_VELOCITY);
-    io.setConveyorRPS(SuperstructureConstants.Conveyor.DEFAULT_VELOCITY);
+    io.setKickerRPS(ShootConstants.Kicker.DEFAULT_VELOCITY);
+    io.setConveyorRPS(ShootConstants.Conveyor.DEFAULT_VELOCITY);
   }
 
   public void startShooter(AngularVelocity velocity) {
     io.setShooterRPS(velocity);
+  }
+
+  private static final double voltsPerRPM = 1.05 * 12.0 / 6000.0;
+
+  private double calculateFeedForward(double velocity) {
+    return velocity * voltsPerRPM;
+  }
+
+  public void setSpeed(double speed) {
+    io.setDutyCycle(speed);
+  }
+
+  public void setVoltage(double volts) {
+    io.setShooterVoltage(volts);
+  }
+
+  public double getVelocity() {
+    return inputs.shooterVelocity.in(RotationsPerSecond);
+  }
+
+  public void setVelocity(double rpm) {
+    this.targetRPMs = rpm;
   }
 
   public void stopAll() {
@@ -45,8 +70,8 @@ public class Superstructure extends SubsystemBase {
     return runOnce(
         () -> {
           io.setShooterRPS(speed);
-          io.setKickerRPS(SuperstructureConstants.Kicker.DEFAULT_VELOCITY);
-          io.setConveyorRPS(SuperstructureConstants.Conveyor.DEFAULT_VELOCITY);
+          io.setKickerRPS(ShootConstants.Kicker.DEFAULT_VELOCITY);
+          io.setConveyorRPS(ShootConstants.Conveyor.DEFAULT_VELOCITY);
         });
   }
 
@@ -57,8 +82,8 @@ public class Superstructure extends SubsystemBase {
           var target = calc.getHub();
           var delta = calc.update(target);
           io.setShooterRPS(ShootingCalculator.rpsForDistance(delta.distance()));
-          io.setKickerRPS(SuperstructureConstants.Kicker.DEFAULT_VELOCITY);
-          io.setConveyorRPS(SuperstructureConstants.Conveyor.DEFAULT_VELOCITY);
+          io.setKickerRPS(ShootConstants.Kicker.DEFAULT_VELOCITY);
+          io.setConveyorRPS(ShootConstants.Conveyor.DEFAULT_VELOCITY);
         });
   }
 

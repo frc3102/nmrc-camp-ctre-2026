@@ -1,4 +1,4 @@
-package frc.robot.subsystems.superstructure;
+package frc.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -8,7 +8,7 @@ import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import org.littletonrobotics.junction.AutoLog;
 
-public interface SuperstructureIO {
+public interface ShootIO {
   @AutoLog
   public static class SuperstructureIOInputs {
     public boolean conveyorConnected = false;
@@ -45,7 +45,7 @@ public interface SuperstructureIO {
 
   public default void setShooterRPS(AngularVelocity velocity) {}
 
-  public default void setShooterVoltage(Voltage volts) {}
+  public default void setShooterVoltage(double volts) {}
 
   public default boolean isAtSpeed(AngularVelocity velocity) {
     return true;
@@ -54,4 +54,6 @@ public interface SuperstructureIO {
   public default void stopKicker() {}
 
   public default void stopShooter() {}
+
+  public default void setDutyCycle(double speed) {}
 }

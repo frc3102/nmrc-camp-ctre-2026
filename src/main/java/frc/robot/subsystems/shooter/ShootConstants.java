@@ -1,4 +1,4 @@
-package frc.robot.subsystems.superstructure;
+package frc.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -6,7 +6,7 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Voltage;
 
-public class SuperstructureConstants {
+public class ShootConstants {
   public static final Distance SHOOTER_OFFSET_X = Inches.of(-10);
   public static final Distance SHOOTER_OFFSET_Y = Inches.of(3);
 

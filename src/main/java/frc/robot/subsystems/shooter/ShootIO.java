@@ -10,7 +10,7 @@ import org.littletonrobotics.junction.AutoLog;
 
 public interface ShootIO {
   @AutoLog
-  public static class SuperstructureIOInputs {
+  public static class ShootIOInputs {
     public boolean conveyorConnected = false;
     public boolean kickerConnected = false;
     public boolean shooterLeaderConnected = false;
@@ -37,7 +37,7 @@ public interface ShootIO {
     public Temperature shooterFollowerTemp = Celsius.of(0);
   }
 
-  public default void updateInputs(SuperstructureIOInputs inputs) {}
+  public default void updateInputs(ShootIOInputs inputs) {}
 
   public default void setConveyorRPS(AngularVelocity velocity) {}
 

@@ -5,13 +5,12 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.superstructure.SuperstructureIOInputsAutoLogged;
 import frc.robot.util.ShootingCalculator;
 import org.littletonrobotics.junction.Logger;
 
 public class ShootSubystem extends SubsystemBase {
   private final ShootIO io;
-  private final SuperstructureIOInputsAutoLogged inputs = new SuperstructureIOInputsAutoLogged();
+  private final ShootIOInputsAutoLogged inputs = new ShootIOInputsAutoLogged();
 
   private double targetRPMs;
 

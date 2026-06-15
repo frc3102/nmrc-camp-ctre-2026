@@ -170,7 +170,7 @@ public class ShootIOTalonFX implements ShootIO {
   }
 
   @Override
-  public void updateInputs(SuperstructureIOInputs inputs) {
+  public void updateInputs(ShootIOInputs inputs) {
     boolean conveyorConnected =
         BaseStatusSignal.refreshAll(
                 conveyorSupplyAmps, conveyorVolts, conveyorTemp, conveyorVelocity)

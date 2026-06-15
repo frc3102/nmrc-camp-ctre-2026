@@ -22,8 +22,6 @@ import edu.wpi.first.units.measure.Voltage;
 public class ShootIOTalonFX implements ShootIO {
   private TalonFX conveyor = new TalonFX(ShootConstants.Conveyor.CAN_ID);
   private TalonFX kicker = new TalonFX(ShootConstants.Kicker.CAN_ID);
-  private TalonFX shooterLeader = new TalonFX(ShootConstants.Shooter.CAN_ID_LEADER);
-  private TalonFX shooterFollower = new TalonFX(ShootConstants.Shooter.CAN_ID_FOLLOWER);
 
   // Conveyor Signals
   private StatusSignal<Voltage> conveyorVolts = conveyor.getMotorVoltage();
@@ -37,17 +35,6 @@ public class ShootIOTalonFX implements ShootIO {
   private StatusSignal<AngularVelocity> kickerVelocity = kicker.getVelocity();
   private StatusSignal<Temperature> kickerTemp = kicker.getDeviceTemp();
 
-  // Shooter Leader Signals
-  private StatusSignal<Voltage> shooterLeaderVolts = shooterLeader.getMotorVoltage();
-  private StatusSignal<Current> shooterLeaderSupplyAmps = shooterLeader.getSupplyCurrent();
-  private StatusSignal<AngularVelocity> shooterLeaderVelocity = shooterLeader.getVelocity();
-  private StatusSignal<Temperature> shooterLeaderTemp = shooterLeader.getDeviceTemp();
-
-  private AngularVelocity shooterTargetVelocity = RotationsPerSecond.of(0);
-  // Shooter Follower Signals
-  private StatusSignal<Voltage> shooterFollowerVolts = shooterFollower.getMotorVoltage();
-  private StatusSignal<Current> shooterFollowerSupplyAmps = shooterFollower.getSupplyCurrent();
-  private StatusSignal<Temperature> shooterFollowerTemp = shooterFollower.getDeviceTemp();
 
   // Control signals
   private MotionMagicVelocityVoltage conveyorVoltage = new MotionMagicVelocityVoltage(0);
@@ -61,12 +48,6 @@ public class ShootIOTalonFX implements ShootIO {
 
     configConveyor(conveyor);
     configKicker(kicker);
-    configShooterMotor(shooterLeader);
-    configShooterMotor(shooterFollower);
-
-    shooterFollower.setControl(
-        new Follower(ShootConstants.Shooter.CAN_ID_LEADER, MotorAlignmentValue.Opposed));
-
     BaseStatusSignal.setUpdateFrequencyForAll(
         50,
         conveyorSupplyAmps,
@@ -76,15 +57,8 @@ public class ShootIOTalonFX implements ShootIO {
         kickerSupplyAmps,
         kickerVolts,
         kickerTemp,
-        kickerVelocity,
-        shooterLeaderSupplyAmps,
-        shooterLeaderVolts,
-        shooterLeaderTemp,
-        shooterLeaderVelocity,
-        shooterFollowerSupplyAmps,
-        shooterFollowerVolts,
-        shooterFollowerTemp);
-    ParentDevice.optimizeBusUtilizationForAll(conveyor, kicker, shooterLeader, shooterFollower);
+        kickerVelocity);
+    ParentDevice.optimizeBusUtilizationForAll(conveyor, kicker);
   }
 
   private void configConveyor(TalonFX motor) {
@@ -151,16 +125,6 @@ public class ShootIOTalonFX implements ShootIO {
   }
 
   @Override
-  public void setDutyCycle(double speed) {
-    shooterLeader.setControl(dutyCycleOut.withOutput(speed));
-  }
-
-  @Override
-  public void setShooterVoltage(double volts) {
-    shooterLeader.setControl(voltageOut.withOutput(volts));
-  }
-
-  @Override
   public boolean isAtSpeed(AngularVelocity velocity) {
     return true;
   }
@@ -178,36 +142,14 @@ public class ShootIOTalonFX implements ShootIO {
     boolean kickerConnected =
         BaseStatusSignal.refreshAll(kickerSupplyAmps, kickerVolts, kickerTemp, kickerVelocity)
             .isOK();
-    boolean shooterLeaderConnected =
-        BaseStatusSignal.refreshAll(
-                shooterLeaderSupplyAmps,
-                shooterLeaderVolts,
-                shooterLeaderTemp,
-                shooterLeaderVelocity)
-            .isOK();
-    boolean shooterFollowerConnected =
-        BaseStatusSignal.refreshAll(
-                shooterFollowerSupplyAmps, shooterFollowerVolts, shooterFollowerTemp)
-            .isOK();
 
     inputs.conveyorConnected = conveyorConnected;
     inputs.kickerConnected = kickerConnected;
-    inputs.shooterLeaderConnected = shooterLeaderConnected;
-    inputs.shooterFollowerConnected = shooterFollowerConnected;
-
     inputs.conveyorVolts = conveyorVolts.getValue();
     inputs.kickerVolts = kickerVolts.getValue();
-    inputs.shooterLeaderVolts = shooterLeaderVolts.getValue();
-    inputs.shooterFollowerVolts = shooterFollowerVolts.getValue();
-
     inputs.conveyorAmps = conveyorSupplyAmps.getValue();
     inputs.kickerAmps = kickerSupplyAmps.getValue();
-    inputs.shooterLeaderAmps = shooterLeaderSupplyAmps.getValue();
-    inputs.shooterFollowerAmps = shooterFollowerSupplyAmps.getValue();
-
     inputs.conveyorVelocity = conveyorVelocity.getValue();
     inputs.kickerVelocity = kickerVelocity.getValue();
-    inputs.shooterVelocity = shooterLeaderVelocity.getValue();
-    inputs.shooterTargetVelocity = shooterTargetVelocity.copy();
   }
 }

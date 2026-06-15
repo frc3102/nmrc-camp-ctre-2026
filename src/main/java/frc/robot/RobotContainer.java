@@ -30,7 +30,6 @@ import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIO;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
-import frc.robot.util.ShootingCalculator;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -43,7 +42,7 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Vision vision;
-  private final ShootSubystem superstructure;
+  private final ShootSubystem shooter;
 
   private final GameState gameState;
 
@@ -73,7 +72,7 @@ public class RobotContainer {
             new Vision(
                 drive::addVisionMeasurement,
                 new VisionIOLimelight(VisionConstants.camera0Name, drive::getRotation));
-        superstructure = new ShootSubystem(new ShootIOTalonFX());
+        shooter = new ShootSubystem(new ShootIOTalonFX());
 
         break;
 
@@ -91,7 +90,7 @@ public class RobotContainer {
                 drive::addVisionMeasurement,
                 new VisionIOPhotonVisionSim(
                     VisionConstants.camera0Name, VisionConstants.robotToCamera0, drive::getPose));
-        superstructure = new ShootSubystem(new ShootIOTalonFX());
+        shooter = new ShootSubystem(new ShootIOTalonFX());
         break;
 
       default:
@@ -104,11 +103,10 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         vision = new Vision(drive::addVisionMeasurement, new VisionIO() {});
-        superstructure = new ShootSubystem(new ShootIO() {});
+        shooter = new ShootSubystem(new ShootIO() {});
 
         break;
     }
-    ShootingCalculator.init(drive::getPose, drive::getChassisSpeeds, gameState);
     registerNamedCommands();
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());

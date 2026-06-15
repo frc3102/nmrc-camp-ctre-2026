@@ -13,28 +13,17 @@ public interface ShootIO {
   public static class ShootIOInputs {
     public boolean conveyorConnected = false;
     public boolean kickerConnected = false;
-    public boolean shooterLeaderConnected = false;
-    public boolean shooterFollowerConnected = false;
+
 
     public Voltage conveyorVolts = Volts.of(0);
     public Voltage kickerVolts = Volts.of(0);
-    public Voltage shooterLeaderVolts = Volts.of(0);
-    public Voltage shooterFollowerVolts = Volts.of(0);
-
     public Current conveyorAmps = Amps.of(0);
     public Current kickerAmps = Amps.of(0);
-    public Current shooterLeaderAmps = Amps.of(0);
-    public Current shooterFollowerAmps = Amps.of(0);
-
     public AngularVelocity conveyorVelocity = RotationsPerSecond.of(0);
     public AngularVelocity kickerVelocity = RotationsPerSecond.of(0);
-    public AngularVelocity shooterVelocity = RotationsPerSecond.of(0);
-    public AngularVelocity shooterTargetVelocity = RotationsPerSecond.of(0);
 
     public Temperature conveyorTemp = Celsius.of(0);
     public Temperature kickerTemp = Celsius.of(0);
-    public Temperature shooterLeaderTemp = Celsius.of(0);
-    public Temperature shooterFollowerTemp = Celsius.of(0);
   }
 
   public default void updateInputs(ShootIOInputs inputs) {}

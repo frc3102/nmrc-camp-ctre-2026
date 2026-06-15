@@ -14,7 +14,8 @@ public class ShootCommand extends Command {
   private final Drive driveSubsystem;
   private final PIDController aimPidController;
 
-  private final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
+  private final AprilTagFieldLayout fieldLayout =
+      AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
   // Aiming at tag 24
   private final Pose2d targetPose = fieldLayout.getTagPose(24).get().toPose2d();
 
@@ -54,7 +55,7 @@ public class ShootCommand extends Command {
     var currentPose = driveSubsystem.getPose();
 
     Rotation2d toTarget =
-      new Rotation2d(
+        new Rotation2d(
             Math.atan2(
                 targetPose.getY() - currentPose.getY(), targetPose.getX() - currentPose.getX()));
 

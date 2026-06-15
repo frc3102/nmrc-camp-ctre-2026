@@ -14,7 +14,6 @@ public interface ShootIO {
     public boolean conveyorConnected = false;
     public boolean kickerConnected = false;
 
-
     public Voltage conveyorVolts = Volts.of(0);
     public Voltage kickerVolts = Volts.of(0);
     public Current conveyorAmps = Amps.of(0);

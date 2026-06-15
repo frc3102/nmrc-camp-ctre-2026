@@ -2,12 +2,6 @@ package frc.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import org.littletonrobotics.junction.AutoLogOutput;
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
@@ -15,6 +9,10 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class ShootSubystem extends SubsystemBase {
   private final ShootIO io;
@@ -32,7 +30,6 @@ public class ShootSubystem extends SubsystemBase {
     configMotor(shooterFollower);
     shooterFollower.setControl(
         new Follower(ShootConstants.Shooter.CAN_ID_LEADER, MotorAlignmentValue.Opposed));
-
   }
 
   private void configMotor(TalonFX motor) {
@@ -44,9 +41,7 @@ public class ShootSubystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-
-  }
+  public void periodic() {}
 
   public void startConveyorAndKicker() {
     io.setKickerRPS(ShootConstants.Kicker.DEFAULT_VELOCITY);
@@ -81,7 +76,6 @@ public class ShootSubystem extends SubsystemBase {
     return shootMotor.getMotorVoltage().getValueAsDouble();
   }
 
-
   public void setVelocity(double rpm) {
     this.targetRPMs = rpm;
   }
@@ -91,7 +85,6 @@ public class ShootSubystem extends SubsystemBase {
     io.stopKicker();
     setVoltage(0);
   }
-
 
   public Command stop() {
     return runOnce(
